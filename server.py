@@ -1,18 +1,39 @@
-from flask import Flask, request
+from flask import Flask, request, send_file
+
 app = Flask(__name__)
 
 from patchface import generate_adv_masked_image
 from werkzeug.utils import secure_filename
+import cv2 as cv
+import logging
 
-@app.route('/')
+@app.route("/")
 def hello_world():
-    return 'Hello, World!'
+    return "Hello, World!"
 
-@app.route('/patchface')
+
+@app.route("/patchface", methods=['POST'])
 def patch_uploaded_file():
-  if request.method == 'POST':
-    f = request.files['image']
-    file_path = f'/tmp/{secure_filename(f.filename)}'
-    f.save(file_path)
+    logging.info(request.files)
 
-    generate_adv_masked_image()
+    try:
+        f = request.files.get("image")
+
+        if f is None:
+            return "File invalid", 400
+
+        file_path = f"/tmp/{secure_filename(f.filename)}"
+        f.save(file_path)
+
+        adv_image = generate_adv_masked_image(file_path)
+
+        logging.debug(adv_image)
+
+        cv.imwrite(file_path, adv_image)
+        
+        cv.imwrite(file_path, cv.cvtColor(cv.imread(file_path), cv.COLOR_BGR2RGB))
+        return send_file(file_path, 'img/jpeg', attachment_filename=secure_filename(f.filename))
+
+    except Exception as e:
+        logging.error(e)
+        return "Internal Server Error", 500

@@ -11,6 +11,8 @@ adversarial-robustness-toolbox = "*"
 mtcnn = "*"
 numpy = "*"
 flask = "*"
+black = "==19.10b0"
+opencv-python = "*"
 
 [requires]
 python_version = "3.7"
