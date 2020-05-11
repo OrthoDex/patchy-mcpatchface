@@ -1,32 +1,15 @@
-from __future__ import absolute_import, division, print_function, unicode_literals
+# from __future__ import absolute_import, division, print_function, unicode_literals
 import zipfile
 import os
-import numpy as np
+# import numpy as np
 from tensorflow import keras
-from keras.preprocessing import image
-from keras.applications.resnet50 import ResNet50, preprocess_input
 from keras.layers import Dense, Flatten, Input
-from keras.models import Model
 import keras.backend as k
-from matplotlib import pyplot as plt
 
 from mtcnn import MTCNN
 
-import scipy.misc
-import time
-import cv2 as cv
-
-import pandas as pd 
-import plotly.graph_objects as Go
-import plotly.express as px
-
-import matplotlib.patches as patches
-import PIL
-import requests
-
 from art.classifiers import KerasClassifier
 from art.attacks import FastGradientMethod
-from art.utils import to_categorical
 from deepface import create_deepface, get_weights
 
 def load_deepface():

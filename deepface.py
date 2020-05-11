@@ -1,4 +1,5 @@
 from os import path
+from tensorflow import keras
 IMAGE_SIZE = (152, 152)
 CHANNELS = 3
 NUM_CLASSES = 8631

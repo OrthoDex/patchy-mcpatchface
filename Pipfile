@@ -9,6 +9,8 @@ verify_ssl = true
 tensorflow = "==2.2.0"
 adversarial-robustness-toolbox = "*"
 mtcnn = "*"
+numpy = "*"
+flask = "*"
 
 [requires]
 python_version = "3.7"
