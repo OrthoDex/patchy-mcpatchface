@@ -1,0 +1,14 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+tensorflow = "==2.2.0"
+adversarial-robustness-toolbox = "*"
+mtcnn = "*"
+
+[requires]
+python_version = "3.7"
