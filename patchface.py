@@ -21,20 +21,17 @@ import cv2 as cv
 tf.compat.v1.disable_eager_execution()
 
 from mtcnn import MTCNN
-
 mtdetector = MTCNN()
 
 from art.classifiers import KerasClassifier
 from art.attacks import FastGradientMethod
 from deepface import create_deepface, get_weights
-
 ## pre load weights on app startup so that we aren't pulling on every request
-weights = get_weights()
 
 def load_deepface():
     # from DeepFace import create_deepface, get_weights
     model = create_deepface()
-    model.load_weights(weights)
+    model.load_weights(get_weights())
     return model
 
 ## Creates a mask for the image, extracts out facial feature predictions starting
@@ -125,7 +122,7 @@ def create_classifier(model):
 
 
 ## Let's run this through the FastGradientMethod Attack
-
+deepface_classifier = create_classifier(load_deepface())
 
 def run_fgsm_attacks(
     classifier,
@@ -187,8 +184,6 @@ def generate_adv_masked_image(image_path):
     target_image = image.img_to_array(
         image.load_img(image_path, target_size=(152, 152))
     )
-
-    deepface_classifier = create_classifier(load_deepface())
 
     adv_image = run_fgsm_attacks(
         deepface_classifier,

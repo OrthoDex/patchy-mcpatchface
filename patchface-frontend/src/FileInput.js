@@ -1,4 +1,8 @@
 import React from "react";
+import './FileInput.css'
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Image from 'react-bootstrap/Image';
 
 export class FileInput extends React.Component {
   constructor(props) {
@@ -11,7 +15,7 @@ export class FileInput extends React.Component {
   }
   handleSubmit(event) {
     event.preventDefault();
-    fetch('localhost:8000/patchface', {
+    fetch('http://localhost:8000/patchface', {
       method: 'POST',
       fileInput: this.fileInput.current.files[0]
     }).then(resp => {
@@ -31,15 +35,15 @@ export class FileInput extends React.Component {
   render() {
     return (
       <div id='container' >
-        <form onSubmit={this.handleSubmit}>
-          <label>
+        <Form onSubmit={this.handleSubmit}>
+          <Form.Label>
             Upload file:
-            <input type="file" ref={this.fileInput} />
-          </label>
+            <Form.Control type="file" ref={this.fileInput} />
+          </Form.Label>
           <br />
-          <button type="submit">Submit</button>
-        </form>
-        <Image src={`data:image/jpg;base64,${this.state.file}`}/>
+          <Button type="submit">Submit</Button>
+        </Form>
+        {this.state.file.length !== 0 ? <Image alt='image file' src={`data:image/jpg;base64,${this.state.file}`}/> : <p></p>}
       </div>
     );
   }

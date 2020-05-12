@@ -1,4 +1,5 @@
 from flask import Flask, request, send_file
+import traceback
 
 app = Flask(__name__)
 
@@ -35,5 +36,6 @@ def patch_uploaded_file():
         return send_file(file_path, 'img/jpeg', attachment_filename=secure_filename(f.filename))
 
     except Exception as e:
-        logging.error(e)
+        tb = traceback.format_exc()
+        logging.error(tb)
         return "Internal Server Error", 500
