@@ -120,10 +120,6 @@ def create_classifier(model):
     )
     return classifier
 
-
-## Let's run this through the FastGradientMethod Attack
-deepface_classifier = create_classifier(load_deepface())
-
 def run_fgsm_attacks(
     classifier,
     target_image,
@@ -181,6 +177,9 @@ def run_fgsm_attacks(
 
 
 def generate_adv_masked_image(image_path):
+    ## Let's run this through the FastGradientMethod Attack
+    deepface_classifier = create_classifier(load_deepface())
+    
     target_image = image.img_to_array(
         image.load_img(image_path, target_size=(152, 152))
     )
@@ -194,6 +193,14 @@ def generate_adv_masked_image(image_path):
         feature_extractor="mtcnn",
     )
     return adv_image
+
+def patch_input_image(image_path):
+    ac = cv.imread(image_path)
+    ac = cv.resize(ac, (128, 128))
+
+    noise = cv.imread('./noise.jpg')
+
+    return ac+noise
 
 import argparse
 
