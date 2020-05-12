@@ -24,6 +24,8 @@ This software has *not* had extensive testing. Please use at your own risk. It's
 
 The script loads Deepface, a facial verification model. Using GPU can substantially speed up the patch generation.
 
+You can also try an interactive demo in Google Collab [at this link](https://colab.research.google.com/drive/1SkmWW1-mYk88-aU3klfKkY8iQOihBLvZ?usp=sharing).
+
 ## Roadmap
  - Create Flask server for generating patches
  - Offload adversarial generation to browser side using tensorflow.js
